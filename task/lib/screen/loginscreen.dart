@@ -17,10 +17,16 @@ class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
   void checkAuth(TextEditingController userNameController,
       TextEditingController passwordController) {
-    if (userNameController.value.isNull) {
+    if (userNameController.value.isNull || passwordController.value.isNull) {
       authentication = false;
       return;
     }
+    if (passwordController.text.length < 6) {
+      authentication = false;
+      return;
+    }
+
+    authentication = true;
   }
 
   @override
@@ -66,11 +72,15 @@ class _LoginState extends State<Login> {
 
               ElevatedButton(
                   onPressed: () {
+                    // checkAuth(userNameController, passwordController);
+                    // authentication
+                    //     ?
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ApiScreen(),
                         ));
+                    // : const AlertDialog();
                   },
                   child: const Text("Sign In")),
               ElevatedButton(onPressed: () {}, child: const Text("Sign Up")),
